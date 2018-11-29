@@ -1,28 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour {
-    private Rigidbody body;
-
+public class PlayerController : BaseAllyCharacter {
     private Vector3 keyboardInputs = Vector3.zero;
     private Vector3 mouseInput = Vector3.zero;
 
     private Quaternion localRotation = Quaternion.identity;
 
-    public GameObject bullet;
-
     //TODO: Player rotation seems sketchy still. Might want to look into cleaning it up.
-    public float movementSpeed = 5.0f;
     private float rotationX = 0f;
-
-    //Delay in seconds
-    public float shootDelay = .2f;
-    private float shotTime = 0f;
 
     // Use this for initialization
     void Start () {
-        body = GetComponent<Rigidbody>();
+        base.Init();
     }
 	
     // Update is called once per frame
@@ -30,10 +22,27 @@ public class PlayerController : MonoBehaviour {
         HandleInput();
     }
 
-    // Called in fixed timesteps
     void FixedUpdate() {
         body.MoveRotation(localRotation);
         body.MovePosition(body.position + keyboardInputs * movementSpeed * Time.fixedDeltaTime);
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if(other.tag=="HealthPack") {
+            HealthPack pack = other.GetComponent<HealthPack>();
+            health.heal(pack.getHealAmount());
+        }
+
+        if (other.tag == "ArmorPack") {
+            HealthPack pack = other.GetComponent<HealthPack>();
+            health.healArmor(pack.getArmorAmount());
+        }
+
+        if (other.tag == "AmmoPack")
+        {
+            HealthPack pack = other.GetComponent<HealthPack>();
+            gunController.AddAmmo(pack.getAmmoAmount());
+        }
     }
 
     private void HandleInput() {
@@ -44,9 +53,51 @@ public class PlayerController : MonoBehaviour {
                 Cursor.lockState = CursorLockMode.None;
         }
 
-        if(Input.GetKey(KeyCode.Mouse0)) {
-            fireBullet();
+        if(Input.GetKeyDown(KeyCode.Tab)) {
+
+            //This should swap out everything but it's not
+            heldGun.SetActive(false);
+
+            heldGun = playerInventory.SwapGun();
+            heldGun.SetActive(true);
+
+            gunController = heldGun.GetComponent<GunController>();
         }
+        if(Input.GetKey(KeyCode.Mouse0)) {
+            if (gunController)
+                gunController.Shoot();
+        }
+
+        if(Input.GetKeyUp(KeyCode.Mouse0)) {
+            if(gunController)
+                gunController.SetShooting(false);
+        }
+        
+        if(Input.GetKeyDown(KeyCode.R)) {
+            gunController.Reload();
+        }
+
+        if(Input.GetKeyDown(KeyCode.E)) {
+            Camera temp = Camera.main;
+            RaycastHit results;
+            if(Physics.Raycast(temp.transform.position, temp.transform.forward, out results)) {
+                if (results.collider.gameObject.tag == "Gun") {
+                    playerInventory.PickUpGun(results.collider.gameObject);
+                    heldGun = playerInventory.GetHeldGun();
+                    gunController = heldGun.GetComponent<GunController>();
+                } 
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.G)) {
+            heldGun = playerInventory.DropGun(true);
+            heldGun.SetActive(true);
+            if (heldGun)
+                gunController = heldGun.GetComponent<GunController>();
+            else
+                gunController = null;
+        }
+
         keyboardInputs = Vector3.zero;
         keyboardInputs.x = Input.GetAxis("Horizontal");
         keyboardInputs.z = Input.GetAxis("Vertical");
@@ -60,21 +111,13 @@ public class PlayerController : MonoBehaviour {
         localRotation = Quaternion.Euler(0, rotationX, 0);
     }
 
-    public void fireBullet() {
-        if(Time.time - shotTime >= shootDelay) {
-            shotTime = Time.time;
-
-            Vector3 cameraDir = Camera.main.transform.forward;
-            Vector3 cameraPos = Camera.main.transform.position;
-            RaycastHit results;
-
-            if (Physics.Raycast(cameraPos, cameraDir, out results)) {
-                if(results.collider.tag == "Enemy") {
-                    results.collider.BroadcastMessage("Shot");
-                }
-            }
-        }	
-    } 
-
+    override
+    public void Hit(int damage) {
+        if (health.takeDamage(damage) <= 0) {
+            Scene current = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(current.name);
+        }    
+    }
 
 }
+

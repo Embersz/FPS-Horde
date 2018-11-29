@@ -1,0 +1,64 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="Zombie breathing 1_data" version="1.3.0" audacityversion="2.2.2" sel0="0.0000000000" sel1="0.0000000000" vpos="0" h="0.0000000000" zoom="67.7017064701" rate="48000.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags>
+		<tag name="TCO" value="0"/>
+		<tag name="TCD" value="353019167"/>
+	</tags>
+	<wavetrack name="189281__huminaatio__zombie-breathing" channel="0" linked="1" mute="0" solo="0" height="342" minimized="0" isSelected="1" rate="48000" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1694492">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808e52.au" len="262144" min="-0.462368" max="0.452433" rms="0.021165"/>
+				</waveblock>
+				<waveblock start="262144">
+					<simpleblockfile filename="e0808302.au" len="262144" min="-0.546203" max="0.382643" rms="0.022739"/>
+				</waveblock>
+				<waveblock start="524288">
+					<simpleblockfile filename="e0808462.au" len="262144" min="-0.422062" max="0.320947" rms="0.020415"/>
+				</waveblock>
+				<waveblock start="786432">
+					<simpleblockfile filename="e0808956.au" len="262144" min="-0.32268" max="0.235751" rms="0.018243"/>
+				</waveblock>
+				<waveblock start="1048576">
+					<simpleblockfile filename="e0808126.au" len="262144" min="-0.310701" max="0.279798" rms="0.025301"/>
+				</waveblock>
+				<waveblock start="1310720">
+					<simpleblockfile filename="e08087fe.au" len="191886" min="-0.202774" max="0.149846" rms="0.022639"/>
+				</waveblock>
+				<waveblock start="1502606">
+					<simpleblockfile filename="e08089b2.au" len="191886" min="-0.242763" max="0.250859" rms="0.019843"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="189281__huminaatio__zombie-breathing" channel="1" linked="0" mute="0" solo="0" height="342" minimized="0" isSelected="1" rate="48000" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1694492">
+				<waveblock start="0">
+					<simpleblockfile filename="e08086a5.au" len="262144" min="-0.458007" max="0.448043" rms="0.020837"/>
+				</waveblock>
+				<waveblock start="262144">
+					<simpleblockfile filename="e0808362.au" len="262144" min="-0.540263" max="0.378847" rms="0.022376"/>
+				</waveblock>
+				<waveblock start="524288">
+					<simpleblockfile filename="e0808d14.au" len="262144" min="-0.418193" max="0.317815" rms="0.020036"/>
+				</waveblock>
+				<waveblock start="786432">
+					<simpleblockfile filename="e0808839.au" len="262144" min="-0.319169" max="0.233542" rms="0.017843"/>
+				</waveblock>
+				<waveblock start="1048576">
+					<simpleblockfile filename="e0808e3a.au" len="262144" min="-0.304319" max="0.274195" rms="0.024753"/>
+				</waveblock>
+				<waveblock start="1310720">
+					<simpleblockfile filename="e0808d87.au" len="191886" min="-0.197944" max="0.146357" rms="0.022109"/>
+				</waveblock>
+				<waveblock start="1502606">
+					<simpleblockfile filename="e0808cbc.au" len="191886" min="-0.237647" max="0.245427" rms="0.019411"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>
